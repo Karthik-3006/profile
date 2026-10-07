@@ -1,0 +1,387 @@
+<h1><strong>DATA SCIENCE - </strong>22DS102006</h1><h2>Perform Data Visualization with Matplotlib and SeaBorn considering online dataset for processing.</h2><ul><li><ol><li><strong>Create a Line Plot by setting the title, axis labels, ticks, ticklabels , annotations on subplots and save to a file.</strong></li><li><strong>Create Bar Plots using Series and DataFrame index.</strong></li></ol></li></ul><ol><li><strong>Create bar plots with a DataFrame to group the values in each row together in a group in bars side by side for each value.</strong></li><li><strong>Create stacked bar plots from a DataFrame.</strong><ol><li><strong>Create Histogram to display the value frequency and Density Plot to generate continuous probability distribution function for observed data.</strong></li><li><strong>Create Scatter Plot and examine the relationship between two one-dimensional data series.</strong></li><li><strong>Create Box plots to visualize data with many categorical variables.</strong></li></ol></li></ol><h2>Aim</h2><p>To perform <strong>data visualization using Matplotlib and Seaborn</strong> by loading an online dataset, processing the data, and representing it using different types of plots such as <strong>line plot, bar plot, histogram, and scatter plot</strong>.</p><h2>Software Requirements</h2><ul><li>Python 3.x </li><li>Pandas </li><li>Matplotlib </li><li>Seaborn </li><li>Jupyter Notebook / Google Colab / Python IDE </li></ul><h2>Syntax</h2><h3>Read an online CSV dataset</h3><pre>pd.<span class="code">read_csv(</span>"URL"<span class="code">)</span></pre><h3>Matplotlib plot</h3><pre>plt.<span class="code">plot(</span>x<span class="code">, </span>y<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"X-axis"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Y-axis"<span class="code">)</span>
+plt.<span class="code">title(</span>"Title"<span class="code">)</span>
+plt.<span class="code">show()</span></pre><h3>Seaborn plot</h3><pre>sns.<span class="code">scatterplot(</span>data=df<span class="code">, </span>x="column1"<span class="code">, </span>y="column2"<span class="code">)</span></pre><h2>Solution Program</h2><p>The following program uses the <strong>Iris dataset available online</strong>.</p><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+import<span class="code"> </span>matplotlib.pyplot<span class="code"> </span>as<span class="code"> </span>plt
+import<span class="code"> </span>seaborn<span class="code"> </span>as<span class="code"> </span>sns
+# Load online dataset
+url<span class="code"> </span>=<span class="code"> </span>"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+df<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">read_csv(</span>url<span class="code">)</span>
+# Display first five records
+print<span class="code">(</span>"First Five Records:"<span class="code">)</span>
+print<span class="code">(</span>df.<span class="code">head())</span>
+# Display dataset information
+print<span class="code">(</span>"\nDataset Information:"<span class="code">)</span>
+print<span class="code">(</span>df.<span class="code">info())</span>
+# Display statistical summary
+print<span class="code">(</span>"\nStatistical Summary:"<span class="code">)</span>
+print<span class="code">(</span>df.<span class="code">describe())</span>
+# ---------------------------------------------------
+# 1. Matplotlib - Line Plot
+# ---------------------------------------------------
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+plt.<span class="code">plot(</span>df.<span class="code">index, </span>df<span class="code">[</span>"sepal_length"<span class="code">], </span>label="Sepal Length"<span class="code">)</span>
+plt.<span class="code">plot(</span>df.<span class="code">index, </span>df<span class="code">[</span>"petal_length"<span class="code">], </span>label="Petal Length"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Sample Index"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Length"<span class="code">)</span>
+plt.<span class="code">title(</span>"Sepal Length and Petal Length"<span class="code">)</span>
+plt.<span class="code">legend()</span>
+plt.<span class="code">grid()</span>
+plt.<span class="code">show()</span>
+# ---------------------------------------------------
+# 2. Seaborn - Scatter Plot
+# ---------------------------------------------------
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+sns.<span class="code">scatterplot(</span>
+<span class="code">    </span>data=df<span class="code">,</span>
+<span class="code">    </span>x="sepal_length"<span class="code">,</span>
+<span class="code">    </span>y="petal_length"<span class="code">,</span>
+<span class="code">    </span>hue="species"
+<span class="code">)</span>
+plt.<span class="code">title(</span>"Sepal Length vs Petal Length"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Sepal Length"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Petal Length"<span class="code">)</span>
+plt.<span class="code">show()</span>
+# ---------------------------------------------------
+# 3. Seaborn - Histogram
+# ---------------------------------------------------
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+sns.<span class="code">histplot(</span>
+<span class="code">    </span>data=df<span class="code">,</span>
+<span class="code">    </span>x="sepal_length"<span class="code">,</span>
+<span class="code">    </span>hue="species"<span class="code">,</span>
+<span class="code">    </span>kde=True
+<span class="code">)</span>
+plt.<span class="code">title(</span>"Distribution of Sepal Length"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Sepal Length"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Frequency"<span class="code">)</span>
+plt.<span class="code">show()</span>
+# ---------------------------------------------------
+# 4. Seaborn - Box Plot
+# ---------------------------------------------------
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+sns.<span class="code">boxplot(</span>
+<span class="code">    </span>data=df<span class="code">,</span>
+<span class="code">    </span>x="species"<span class="code">,</span>
+<span class="code">    </span>y="petal_length"
+<span class="code">)</span>
+plt.<span class="code">title(</span>"Petal Length by Species"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Species"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Petal Length"<span class="code">)</span>
+plt.<span class="code">show()</span>
+# ---------------------------------------------------
+# 5. Seaborn - Pair Plot
+# ---------------------------------------------------
+sns.<span class="code">pairplot(</span>
+<span class="code">    </span>df<span class="code">,</span>
+<span class="code">    </span>hue="species"
+<span class="code">)</span>
+plt.<span class="code">show()</span></pre><h2>Expected Output</h2><h3>1. Dataset Preview</h3><pre><span class="code">First Five Records:</span>
+<span class="code">   sepal_length  sepal_width  petal_length  petal_width species</span>
+<span class="code">0           5.1          3.5           1.4          0.2  setosa</span>
+<span class="code">1           4.9          3.0           1.4          0.2  setosa</span>
+<span class="code">2           4.7          3.2           1.3          0.2  setosa</span>
+<span class="code">3           4.6          3.1           1.5          0.2  setosa</span>
+<span class="code">4           5.0          3.6           1.4          0.2  setosa</span></pre><h3>2. Statistical Summary</h3><pre><span class="code">       sepal_length  sepal_width  petal_length  petal_width</span>
+<span class="code">count    150.000000   150.000000    150.000000   150.000000</span>
+<span class="code">mean       5.843333     3.057333      3.758000     1.199333</span>
+<span class="code">std        0.828066     0.435866      1.765298     0.762238</span>
+<span class="code">min        4.300000     2.000000      1.000000     0.100000</span>
+<span class="code">max        7.900000     4.400000      6.900000     2.500000</span></pre><h3>3. Visualizations</h3><p>The program produces:</p><ul><li><strong>Line Plot:</strong> Sepal length and petal length across the observations. </li><li><strong>Scatter Plot:</strong> Relationship between sepal length and petal length, grouped by species. </li><li><strong>Histogram:</strong> Distribution of sepal length. </li><li><strong>Box Plot:</strong> Comparison of petal length among different species. </li><li><strong>Pair Plot:</strong> Relationships among the numerical features of the Iris dataset. </li></ul><h3>Result</h3><p>The online Iris dataset was successfully loaded and processed using <strong>Pandas</strong>. Different data visualizations were successfully created using <strong>Matplotlib and Seaborn</strong> to understand distributions, relationships, and differences among the dataset variables.</p><h1>Create a Line Plot with Title, Axis Labels, Ticks, Tick Labels, Annotations and Save to a File</h1><h2>Aim</h2><p>To create a <strong>line plot using Matplotlib</strong> by setting the title, axis labels, ticks, tick labels, and annotations on subplots, and save the generated plot to an image file.</p><h2>Syntax</h2><h3>Create subplots</h3><pre>fig<span class="code">, </span>ax<span class="code"> </span>=<span class="code"> </span>plt.<span class="code">subplots()</span></pre><h3>Set title</h3><pre>ax.<span class="code">set_title(</span>"Title"<span class="code">)</span></pre><h3>Set axis labels</h3><pre>ax.<span class="code">set_xlabel(</span>"X-axis Label"<span class="code">)</span>
+ax.<span class="code">set_ylabel(</span>"Y-axis Label"<span class="code">)</span></pre><h3>Set ticks and tick labels</h3><pre>ax.<span class="code">set_xticks(</span>x<span class="code">)</span>
+ax.<span class="code">set_xticklabels(</span>labels<span class="code">)</span></pre><h3>Add annotation</h3><pre>ax.<span class="code">annotate(</span>"Text"<span class="code">, </span>xy=<span class="code">(</span>x<span class="code">, </span>y<span class="code">), </span>xytext=<span class="code">(</span>x1<span class="code">, </span>y1<span class="code">),</span>
+<span class="code">            </span>arrowprops=dict<span class="code">(</span>arrowstyle="-&gt;"<span class="code">))</span></pre><h3>Save plot to a file</h3><pre>plt.<span class="code">savefig(</span>"filename.png"<span class="code">, </span>dpi=300<span class="code">, </span>bbox_inches="tight"<span class="code">)</span></pre><h2>Solution Program</h2><pre>import<span class="code"> </span>matplotlib.pyplot<span class="code"> </span>as<span class="code"> </span>plt
+# Data
+months<span class="code"> </span>=<span class="code"> [</span>"Jan"<span class="code">, </span>"Feb"<span class="code">, </span>"Mar"<span class="code">, </span>"Apr"<span class="code">, </span>"May"<span class="code">, </span>"Jun"<span class="code">]</span>
+sales<span class="code"> </span>=<span class="code"> [</span>120<span class="code">, </span>150<span class="code">, </span>180<span class="code">, </span>160<span class="code">, </span>220<span class="code">, </span>250<span class="code">]</span>
+expenses<span class="code"> </span>=<span class="code"> [</span>80<span class="code">, </span>100<span class="code">, </span>120<span class="code">, </span>110<span class="code">, </span>140<span class="code">, </span>160<span class="code">]</span>
+# Create subplots
+fig<span class="code">, </span>ax<span class="code"> </span>=<span class="code"> </span>plt.<span class="code">subplots(</span>2<span class="code">, </span>1<span class="code">, </span>figsize=<span class="code">(</span>10<span class="code">, </span>8<span class="code">))</span>
+# --------------------------------------------------
+# Subplot 1: Sales
+# --------------------------------------------------
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">plot(</span>
+<span class="code">    </span>months<span class="code">,</span>
+<span class="code">    </span>sales<span class="code">,</span>
+<span class="code">    </span>marker="o"<span class="code">,</span>
+<span class="code">    </span>linewidth=2<span class="code">,</span>
+<span class="code">    </span>label="Sales"
+<span class="code">)</span>
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">set_title(</span>"Monthly Sales"<span class="code">)</span>
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">set_xlabel(</span>"Month"<span class="code">)</span>
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">set_ylabel(</span>"Sales"<span class="code">)</span>
+# Set ticks and tick labels
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">set_xticks(</span>range<span class="code">(</span>len<span class="code">(</span>months<span class="code">)))</span>
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">set_xticklabels(</span>months<span class="code">)</span>
+# Annotation
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">annotate(</span>
+<span class="code">    </span>"Highest Sales"<span class="code">,</span>
+<span class="code">    </span>xy=<span class="code">(</span>5<span class="code">, </span>250<span class="code">),</span>
+<span class="code">    </span>xytext=<span class="code">(</span>3.5<span class="code">, </span>270<span class="code">),</span>
+<span class="code">    </span>arrowprops=dict<span class="code">(</span>arrowstyle="-&gt;"<span class="code">)</span>
+<span class="code">)</span>
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">legend()</span>
+ax<span class="code">[</span>0<span class="code">]</span>.<span class="code">grid(</span>True<span class="code">)</span>
+# --------------------------------------------------
+# Subplot 2: Expenses
+# --------------------------------------------------
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">plot(</span>
+<span class="code">    </span>months<span class="code">,</span>
+<span class="code">    </span>expenses<span class="code">,</span>
+<span class="code">    </span>marker="s"<span class="code">,</span>
+<span class="code">    </span>linewidth=2<span class="code">,</span>
+<span class="code">    </span>label="Expenses"
+<span class="code">)</span>
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">set_title(</span>"Monthly Expenses"<span class="code">)</span>
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">set_xlabel(</span>"Month"<span class="code">)</span>
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">set_ylabel(</span>"Expenses"<span class="code">)</span>
+# Set ticks and tick labels
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">set_xticks(</span>range<span class="code">(</span>len<span class="code">(</span>months<span class="code">)))</span>
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">set_xticklabels(</span>months<span class="code">)</span>
+# Annotation
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">annotate(</span>
+<span class="code">    </span>"Highest Expense"<span class="code">,</span>
+<span class="code">    </span>xy=<span class="code">(</span>5<span class="code">, </span>160<span class="code">),</span>
+<span class="code">    </span>xytext=<span class="code">(</span>3.5<span class="code">, </span>180<span class="code">),</span>
+<span class="code">    </span>arrowprops=dict<span class="code">(</span>arrowstyle="-&gt;"<span class="code">)</span>
+<span class="code">)</span>
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">legend()</span>
+ax<span class="code">[</span>1<span class="code">]</span>.<span class="code">grid(</span>True<span class="code">)</span>
+# Overall title
+fig.<span class="code">suptitle(</span>"Monthly Sales and Expenses Analysis"<span class="code">, </span>fontsize=16<span class="code">)</span>
+# Adjust layout
+plt.<span class="code">tight_layout()</span>
+# Save the plot to a file
+plt.<span class="code">savefig(</span>
+<span class="code">    </span>"monthly_sales_expenses.png"<span class="code">,</span>
+<span class="code">    </span>dpi=300<span class="code">,</span>
+<span class="code">    </span>bbox_inches="tight"
+<span class="code">)</span>
+# Display the plot
+plt.<span class="code">show()</span></pre><h2>Expected Output</h2><p>The program generates <strong>two subplots</strong>:</p><pre><span class="code">       Monthly Sales and Expenses Analysis</span>
+<span class="code">          Monthly Sales</span>
+<span class="code">Sales</span>
+<span class="code">250 |                         ● ← Highest Sales</span>
+<span class="code">220 |                    ●</span>
+<span class="code">180 |             ●</span>
+<span class="code">150 |        ●</span>
+<span class="code">120 |   ●</span>
+<span class="code">    +--------------------------------</span>
+<span class="code">       Jan  Feb  Mar  Apr  May  Jun</span>
+<span class="code">                    Month</span>
+<span class="code">          Monthly Expenses</span>
+<span class="code">Expenses</span>
+<span class="code">160 |                         ■ ← Highest Expense</span>
+<span class="code">140 |                    ■</span>
+<span class="code">120 |             ■</span>
+<span class="code">110 |        ■</span>
+<span class="code">100 |   ■</span>
+<span class="code"> 80 | ●</span>
+<span class="code">    +--------------------------------</span>
+<span class="code">       Jan  Feb  Mar  Apr  May  Jun</span>
+<span class="code">                    Month</span></pre><p>The actual Matplotlib output will display the plots graphically with <strong>titles, axis labels, customized ticks, tick labels, legends, grids, and arrow annotations</strong>.</p><h2>Output File</h2><p>The plot is saved as:</p><pre><span class="code">monthly_sales_expenses.png</span></pre><p>at <strong>300 DPI</strong>, making it suitable for reports and practical records.</p><h2>Result</h2><p>Thus, a line plot with <strong>titles, axis labels, ticks, tick labels, annotations, and multiple subplots</strong> was successfully created using Matplotlib and saved to an image file.</p><p>B). Create Bar Plots using Series and DataFrame index.</p><ol><li>Create bar plots with a DataFrame to group the values in each row together in a group in bars side by side for each value.</li><li>Create stacked bar plots from a DataFrame.</li></ol><h2>Aim</h2><p>To create <strong>bar plots using Pandas Series and DataFrame index</strong>, and to create both <strong>grouped bar plots</strong> and <strong>stacked bar plots</strong> using Matplotlib.</p><h2>i. Create Bar Plots with a DataFrame — Side-by-Side Bars</h2><h3>Syntax</h3><pre>df.<span class="code">plot(</span>kind='bar'<span class="code">)</span></pre><p>or</p><pre>df.<span class="code">plot</span>.<span class="code">bar()</span></pre><p>For a horizontal bar plot:</p><pre>df.<span class="code">plot(</span>kind='barh'<span class="code">)</span></pre><h3>Solution Program</h3><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+import<span class="code"> </span>matplotlib.pyplot<span class="code"> </span>as<span class="code"> </span>plt
+# Create DataFrame
+data<span class="code"> </span>=<span class="code"> {</span>
+<span class="code">    </span>'Python'<span class="code">: [</span>85<span class="code">, </span>90<span class="code">, </span>78<span class="code">, </span>88<span class="code">],</span>
+<span class="code">    </span>'Java'<span class="code">: [</span>75<span class="code">, </span>82<span class="code">, </span>80<span class="code">, </span>85<span class="code">],</span>
+<span class="code">    </span>'C++'<span class="code">: [</span>80<span class="code">, </span>76<span class="code">, </span>85<span class="code">, </span>90<span class="code">]</span>
+<span class="code">}</span>
+df<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame(</span>
+<span class="code">    </span>data<span class="code">,</span>
+<span class="code">    </span>index=<span class="code">[</span>'Student1'<span class="code">, </span>'Student2'<span class="code">, </span>'Student3'<span class="code">, </span>'Student4'<span class="code">]</span>
+<span class="code">)</span>
+print<span class="code">(</span>"DataFrame:"<span class="code">)</span>
+print<span class="code">(</span>df<span class="code">)</span>
+# Create grouped bar plot
+df.<span class="code">plot(</span>
+<span class="code">    </span>kind='bar'<span class="code">,</span>
+<span class="code">    </span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">)</span>
+<span class="code">)</span>
+plt.<span class="code">title(</span>"Student Marks in Different Programming Languages"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Students"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Marks"<span class="code">)</span>
+plt.<span class="code">xticks(</span>rotation=0<span class="code">)</span>
+plt.<span class="code">legend(</span>title="Subjects"<span class="code">)</span>
+plt.<span class="code">tight_layout()</span>
+plt.<span class="code">show()</span></pre><h3>Output</h3><pre><span class="code">DataFrame:</span>
+<span class="code">          Python  Java  C++</span>
+<span class="code">Student1      85    75   80</span>
+<span class="code">Student2      90    82   76</span>
+<span class="code">Student3      78    80   85</span>
+<span class="code">Student4      88    85   90</span></pre><p>The graphical output contains <strong>three bars side by side for each student</strong>:</p><ul><li>Python </li><li>Java </li><li>C++ </li></ul><p>For example:</p><pre><span class="code">Marks</span>
+<span class="code"> 90 |        █</span>
+<span class="code"> 85 | █      █       █</span>
+<span class="code"> 80 | █  █   █   █   █</span>
+<span class="code"> 75 | █  █   █   █   █</span>
+<span class="code">    +----------------------</span>
+<span class="code">      Student1 Student2 ...</span></pre><p>Each row of the DataFrame is represented as a group of bars.</p><h1>ii. Create Stacked Bar Plots from a DataFrame</h1><h2>Aim</h2><p>To create a <strong>stacked bar plot from a DataFrame</strong>, where the values of different columns are stacked on top of each other for each index value.</p><h3>Syntax</h3><pre>df.<span class="code">plot(</span>kind='bar'<span class="code">, </span>stacked=True<span class="code">)</span></pre><p>or</p><pre>df.<span class="code">plot</span>.<span class="code">bar(</span>stacked=True<span class="code">)</span></pre><h2>Solution Program</h2><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+import<span class="code"> </span>matplotlib.pyplot<span class="code"> </span>as<span class="code"> </span>plt
+# Create DataFrame
+data<span class="code"> </span>=<span class="code"> {</span>
+<span class="code">    </span>'Python'<span class="code">: [</span>85<span class="code">, </span>90<span class="code">, </span>78<span class="code">, </span>88<span class="code">],</span>
+<span class="code">    </span>'Java'<span class="code">: [</span>75<span class="code">, </span>82<span class="code">, </span>80<span class="code">, </span>85<span class="code">],</span>
+<span class="code">    </span>'C++'<span class="code">: [</span>80<span class="code">, </span>76<span class="code">, </span>85<span class="code">, </span>90<span class="code">]</span>
+<span class="code">}</span>
+df<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame(</span>
+<span class="code">    </span>data<span class="code">,</span>
+<span class="code">    </span>index=<span class="code">[</span>'Student1'<span class="code">, </span>'Student2'<span class="code">, </span>'Student3'<span class="code">, </span>'Student4'<span class="code">]</span>
+<span class="code">)</span>
+print<span class="code">(</span>"DataFrame:"<span class="code">)</span>
+print<span class="code">(</span>df<span class="code">)</span>
+# Create stacked bar plot
+df.<span class="code">plot(</span>
+<span class="code">    </span>kind='bar'<span class="code">,</span>
+<span class="code">    </span>stacked=True<span class="code">,</span>
+<span class="code">    </span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">)</span>
+<span class="code">)</span>
+plt.<span class="code">title(</span>"Stacked Bar Plot of Student Marks"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Students"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Total Marks"<span class="code">)</span>
+plt.<span class="code">xticks(</span>rotation=0<span class="code">)</span>
+plt.<span class="code">legend(</span>title="Subjects"<span class="code">)</span>
+plt.<span class="code">tight_layout()</span>
+plt.<span class="code">show()</span></pre><h2>Output</h2><pre><span class="code">DataFrame:</span>
+<span class="code">          Python  Java  C++</span>
+<span class="code">Student1      85    75   80</span>
+<span class="code">Student2      90    82   76</span>
+<span class="code">Student3      78    80   85</span>
+<span class="code">Student4      88    85   90</span></pre><p>The graphical output contains <strong>one bar for each student</strong>, with Python, Java, and C++ marks stacked vertically.</p><pre><span class="code">Total</span>
+<span class="code">250 |             █</span>
+<span class="code">200 |     █       █</span>
+<span class="code">150 | █   █   █   █</span>
+<span class="code">100 | █   █   █   █</span>
+<span class="code"> 50 | █   █   █   █</span>
+<span class="code">    +----------------------</span>
+<span class="code">      S1  S2  S3  S4</span></pre><h2>Difference Between Grouped and Stacked Bar Plots</h2><table><thead><tr><th><p><strong>Feature</strong></p></th><th><p><strong>Grouped Bar Plot</strong></p></th><th><p><strong>Stacked Bar Plot</strong></p></th></tr></thead><tbody><tr><td><p>Bars</p></td><td><p>Side by side</p></td><td><p>On top of each other</p></td></tr><tr><td><p>Code</p></td><td><p><span class="code">df.plot(kind='bar')</span></p></td><td><p><span class="code">df.plot(kind='bar', stacked=True)</span></p></td></tr><tr><td><p>Comparison</p></td><td><p>Easy to compare individual values</p></td><td><p>Easy to see total and contribution</p></td></tr><tr><td><p>Number of bars</p></td><td><p>Multiple bars per index</p></td><td><p>One combined bar per index</p></td></tr></tbody></table><h3>Result</h3><p>Thus, <strong>grouped bar plots</strong> and <strong>stacked bar plots</strong> were successfully created from a Pandas DataFrame using its index values.</p><p>C). <strong>Create Histogram to display the value frequency and Density Plot to generate continuous probability distribution function for observed data.</strong></p><h3>Aim</h3><p>To create a <strong>Histogram</strong> for displaying the frequency distribution of observed data and a <strong>Density Plot</strong> for representing the continuous probability distribution of the data using Python, Pandas, Matplotlib, and Seaborn.</p><h3>Syntax</h3><p><strong>Histogram:</strong></p><pre>sns.<span class="code">histplot(</span>data<span class="code">, </span>bins=10<span class="code">, </span>kde=False<span class="code">)</span></pre><p><strong>Density Plot:</strong></p><pre>sns.<span class="code">kdeplot(</span>data<span class="code">, </span>fill=True<span class="code">)</span></pre><p><strong>Histogram with Density Curve:</strong></p><pre>sns.<span class="code">histplot(</span>data<span class="code">, </span>bins=10<span class="code">, </span>kde=True<span class="code">)</span></pre><h3>Solution Program</h3><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+import<span class="code"> </span>matplotlib.pyplot<span class="code"> </span>as<span class="code"> </span>plt
+import<span class="code"> </span>seaborn<span class="code"> </span>as<span class="code"> </span>sns
+# Sample observed data
+data<span class="code"> </span>=<span class="code"> [</span>45<span class="code">, </span>50<span class="code">, </span>52<span class="code">, </span>55<span class="code">, </span>58<span class="code">, </span>60<span class="code">, </span>62<span class="code">, </span>65<span class="code">, </span>68<span class="code">, </span>70<span class="code">,</span>
+<span class="code">        </span>72<span class="code">, </span>75<span class="code">, </span>78<span class="code">, </span>80<span class="code">, </span>82<span class="code">, </span>85<span class="code">, </span>88<span class="code">, </span>90<span class="code">, </span>92<span class="code">, </span>95<span class="code">]</span>
+# Create DataFrame
+df<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame({</span>'Marks'<span class="code">: </span>data<span class="code">})</span>
+print<span class="code">(</span>"Observed Data:"<span class="code">)</span>
+print<span class="code">(</span>df<span class="code">)</span>
+# Create Histogram
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+sns.<span class="code">histplot(</span>df<span class="code">[</span>'Marks'<span class="code">], </span>bins=6<span class="code">, </span>kde=False<span class="code">)</span>
+plt.<span class="code">title(</span>"Histogram of Marks"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Marks"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Frequency"<span class="code">)</span>
+plt.<span class="code">tight_layout()</span>
+plt.<span class="code">show()</span>
+# Create Density Plot
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+sns.<span class="code">kdeplot(</span>df<span class="code">[</span>'Marks'<span class="code">], </span>fill=True<span class="code">)</span>
+plt.<span class="code">title(</span>"Density Plot of Marks"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Marks"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Density"<span class="code">)</span>
+plt.<span class="code">tight_layout()</span>
+plt.<span class="code">show()</span></pre><h3>Output</h3><p><strong>Observed Data:</strong></p><pre><span class="code">    Marks</span>
+<span class="code">0      45</span>
+<span class="code">1      50</span>
+<span class="code">2      52</span>
+<span class="code">3      55</span>
+<span class="code">4      58</span>
+<span class="code">5      60</span>
+<span class="code">6      62</span>
+<span class="code">7      65</span>
+<span class="code">8      68</span>
+<span class="code">9      70</span>
+<span class="code">10     72</span>
+<span class="code">11     75</span>
+<span class="code">12     78</span>
+<span class="code">13     80</span>
+<span class="code">14     82</span>
+<span class="code">15     85</span>
+<span class="code">16     88</span>
+<span class="code">17     90</span>
+<span class="code">18     92</span>
+<span class="code">19     95</span></pre><h3>Graphical Output</h3><p><strong>1. Histogram:</strong><br />Displays the marks divided into intervals (bins), with the height of each bar representing the <strong>frequency</strong> of observations in that interval.</p><p><strong>2. Density Plot:</strong><br />Displays a smooth curve representing the estimated <strong>continuous probability distribution</strong> of the observed marks.</p><p><strong>3. Combined Histogram + Density Plot</strong> can also be generated using:</p><pre>sns.<span class="code">histplot(</span>df<span class="code">[</span>'Marks'<span class="code">], </span>bins=6<span class="code">, </span>kde=True<span class="code">)</span>
+plt.<span class="code">title(</span>"Histogram with Density Curve"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Marks"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Frequency / Density"<span class="code">)</span>
+plt.<span class="code">show()</span></pre><h3>Explanation</h3><ul><li><strong>Histogram</strong> → shows how frequently values occur in different intervals. </li><li><strong>Density plot (KDE)</strong> → gives a smooth estimate of the underlying probability distribution. </li><li><span class="code">bins=6</span> divides the data into six intervals. </li><li><span class="code">kde=True</span> adds the density curve to the histogram. </li><li><span class="code">fill=True</span> fills the area under the density curve. </li></ul><h3>Result</h3><p>Thus, a histogram and density plot were successfully created to visualize the <strong>frequency distribution</strong> and <strong>continuous probability distribution</strong> of the observed data.</p><p><strong> </strong></p><h2>D). Create Scatter Plot and Examine the Relationship Between Two One-Dimensional Data Series</h2><h3>Aim</h3><p>To create a <strong>Scatter Plot</strong> using two one-dimensional data series and examine the relationship or correlation between them using Python, Pandas, and Matplotlib.</p><h3>Syntax</h3><p><strong>Matplotlib:</strong></p><pre>plt.<span class="code">scatter(</span>x<span class="code">, </span>y<span class="code">)</span></pre><p><strong>Pandas:</strong></p><pre>df.<span class="code">plot</span>.<span class="code">scatter(</span>x='Column1'<span class="code">, </span>y='Column2'<span class="code">)</span></pre><h3>Solution Program</h3><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+import<span class="code"> </span>matplotlib.pyplot<span class="code"> </span>as<span class="code"> </span>plt
+# Two one-dimensional data series
+study_hours<span class="code"> </span>=<span class="code"> [</span>1<span class="code">, </span>2<span class="code">, </span>3<span class="code">, </span>4<span class="code">, </span>5<span class="code">, </span>6<span class="code">, </span>7<span class="code">, </span>8<span class="code">, </span>9<span class="code">, </span>10<span class="code">]</span>
+marks<span class="code"> </span>=<span class="code"> [</span>45<span class="code">, </span>50<span class="code">, </span>55<span class="code">, </span>60<span class="code">, </span>65<span class="code">, </span>70<span class="code">, </span>72<span class="code">, </span>80<span class="code">, </span>85<span class="code">, </span>90<span class="code">]</span>
+# Create DataFrame
+df<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame({</span>
+<span class="code">    </span>'Study_Hours'<span class="code">: </span>study_hours<span class="code">,</span>
+<span class="code">    </span>'Marks'<span class="code">: </span>marks
+<span class="code">})</span>
+print<span class="code">(</span>"Data:"<span class="code">)</span>
+print<span class="code">(</span>df<span class="code">)</span>
+# Create Scatter Plot
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+plt.<span class="code">scatter(</span>df<span class="code">[</span>'Study_Hours'<span class="code">], </span>df<span class="code">[</span>'Marks'<span class="code">])</span>
+plt.<span class="code">title(</span>"Relationship Between Study Hours and Marks"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Study Hours"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Marks"<span class="code">)</span>
+plt.<span class="code">grid(</span>True<span class="code">)</span>
+plt.<span class="code">tight_layout()</span>
+plt.<span class="code">show()</span>
+# Calculate correlation
+correlation<span class="code"> </span>=<span class="code"> </span>df<span class="code">[</span>'Study_Hours'<span class="code">]</span>.<span class="code">corr(</span>df<span class="code">[</span>'Marks'<span class="code">])</span>
+print<span class="code">(</span>"\nCorrelation Coefficient:"<span class="code">, </span>round<span class="code">(</span>correlation<span class="code">, </span>2<span class="code">))</span></pre><h3>Output</h3><p><strong>Data:</strong></p><pre><span class="code">   Study_Hours  Marks</span>
+<span class="code">0            1     45</span>
+<span class="code">1            2     50</span>
+<span class="code">2            3     55</span>
+<span class="code">3            4     60</span>
+<span class="code">4            5     65</span>
+<span class="code">5            6     70</span>
+<span class="code">6            7     72</span>
+<span class="code">7            8     80</span>
+<span class="code">8            9     85</span>
+<span class="code">9           10     90</span>
+<span class="code">Correlation Coefficient: 1.00</span></pre><h3>Graphical Output</h3><p>The scatter plot contains:</p><ul><li><strong>X-axis:</strong> Study Hours </li><li><strong>Y-axis:</strong> Marks </li><li>Each point represents one observation. </li><li>The points move upward as study hours increase, indicating a <strong>positive relationship</strong> between study hours and marks. </li></ul><h3>Explanation</h3><p>A scatter plot is used to examine the relationship between two numerical variables.</p><ul><li>If points move <strong>upward</strong>, there is a positive relationship. </li><li>If points move <strong>downward</strong>, there is a negative relationship. </li><li>If points are randomly distributed, there may be little or no relationship. </li><li>The correlation coefficient ranges from <strong>−1 to +1</strong>. <ul><li><span class="code">+1</span> → perfect positive correlation </li><li><span class="code">0</span> → no linear correlation </li><li><span class="code">−1</span> → perfect negative correlation </li></ul></li></ul><p>In this example, the correlation coefficient is approximately <strong>1.00</strong>, showing a strong positive linear relationship between study hours and marks.</p><h3>Result</h3><p>Thus, the scatter plot was successfully created and the relationship between the two one-dimensional data series was examined using the correlation coefficient.</p><h2>Create Box Plots to Visualize Data with Many Categorical Variables</h2><h3>Aim</h3><p>To create <strong>Box Plots</strong> for visualizing the distribution of numerical data across multiple categorical variables using Python, Pandas, Matplotlib, and Seaborn.</p><h3>Syntax</h3><p><strong>Seaborn:</strong></p><pre>sns.<span class="code">boxplot(</span>x='Category'<span class="code">, </span>y='Value'<span class="code">, </span>data=df<span class="code">)</span></pre><p><strong>Pandas:</strong></p><pre>df.<span class="code">boxplot(</span>column='Value'<span class="code">, </span>by='Category'<span class="code">)</span></pre><h3>Solution Program</h3><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+import<span class="code"> </span>matplotlib.pyplot<span class="code"> </span>as<span class="code"> </span>plt
+import<span class="code"> </span>seaborn<span class="code"> </span>as<span class="code"> </span>sns
+# Create sample data
+data<span class="code"> </span>=<span class="code"> {</span>
+<span class="code">    </span>'Department'<span class="code">: [</span>
+<span class="code">        </span>'CSE'<span class="code">, </span>'CSE'<span class="code">, </span>'CSE'<span class="code">, </span>'CSE'<span class="code">, </span>'CSE'<span class="code">,</span>
+<span class="code">        </span>'ECE'<span class="code">, </span>'ECE'<span class="code">, </span>'ECE'<span class="code">, </span>'ECE'<span class="code">, </span>'ECE'<span class="code">,</span>
+<span class="code">        </span>'EEE'<span class="code">, </span>'EEE'<span class="code">, </span>'EEE'<span class="code">, </span>'EEE'<span class="code">, </span>'EEE'
+<span class="code">    ],</span>
+<span class="code">    </span>'Marks'<span class="code">: [</span>
+<span class="code">        </span>78<span class="code">, </span>85<span class="code">, </span>90<span class="code">, </span>72<span class="code">, </span>88<span class="code">,</span>
+<span class="code">        </span>65<span class="code">, </span>70<span class="code">, </span>82<span class="code">, </span>75<span class="code">, </span>80<span class="code">,</span>
+<span class="code">        </span>60<span class="code">, </span>68<span class="code">, </span>72<span class="code">, </span>76<span class="code">, </span>85
+<span class="code">    ]</span>
+<span class="code">}</span>
+df<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame(</span>data<span class="code">)</span>
+print<span class="code">(</span>"Data:"<span class="code">)</span>
+print<span class="code">(</span>df<span class="code">)</span>
+# Create Box Plot
+plt.<span class="code">figure(</span>figsize=<span class="code">(</span>8<span class="code">, </span>5<span class="code">))</span>
+sns.<span class="code">boxplot(</span>
+<span class="code">    </span>x='Department'<span class="code">,</span>
+<span class="code">    </span>y='Marks'<span class="code">,</span>
+<span class="code">    </span>data=df
+<span class="code">)</span>
+plt.<span class="code">title(</span>"Marks Distribution by Department"<span class="code">)</span>
+plt.<span class="code">xlabel(</span>"Department"<span class="code">)</span>
+plt.<span class="code">ylabel(</span>"Marks"<span class="code">)</span>
+plt.<span class="code">grid(</span>axis='y'<span class="code">, </span>linestyle='--'<span class="code">, </span>alpha=0.5<span class="code">)</span>
+plt.<span class="code">tight_layout()</span>
+plt.<span class="code">show()</span></pre><h3>Output</h3><pre><span class="code">Data:</span>
+<span class="code">   Department  Marks</span>
+<span class="code">0         CSE     78</span>
+<span class="code">1         CSE     85</span>
+<span class="code">2         CSE     90</span>
+<span class="code">3         CSE     72</span>
+<span class="code">4         CSE     88</span>
+<span class="code">5         ECE     65</span>
+<span class="code">6         ECE     70</span>
+<span class="code">7         ECE     82</span>
+<span class="code">8         ECE     75</span>
+<span class="code">9         ECE     80</span>
+<span class="code">10        EEE     60</span>
+<span class="code">11        EEE     68</span>
+<span class="code">12        EEE     72</span>
+<span class="code">13        EEE     76</span>
+<span class="code">14        EEE     85</span></pre><h3>Graphical Output</h3><p>The box plot displays one box for each category:</p><ul><li><strong>CSE</strong> → distribution of CSE marks </li><li><strong>ECE</strong> → distribution of ECE marks </li><li><strong>EEE</strong> → distribution of EEE marks </li></ul><p>Each box plot shows:</p><ul><li><strong>Median</strong> – middle value </li><li><strong>Q1</strong> – first quartile </li><li><strong>Q3</strong> – third quartile </li><li><strong>IQR</strong> – Q3 − Q1 </li><li><strong>Whiskers</strong> – range of typical observations </li><li><strong>Outliers</strong> – unusually high or low observations </li></ul><h3>Explanation</h3><p>A <strong>Box Plot</strong> is useful when a dataset contains a numerical variable and one or more categorical variables. It allows the distributions of several categories to be compared in a single graph.</p><p>For example, in this program, <span class="code">Department</span> is the <strong>categorical variable</strong>, while <span class="code">Marks</span> is the <strong>numerical variable</strong>.</p><p>The following statement creates the box plot:</p><pre>sns.<span class="code">boxplot(</span>x='Department'<span class="code">, </span>y='Marks'<span class="code">, </span>data=df<span class="code">)</span></pre><p>Here:</p><ul><li><span class="code">x='Department'</span> places categories on the X-axis. </li><li><span class="code">y='Marks'</span> places numerical values on the Y-axis. </li><li><span class="code">data=df</span> specifies the DataFrame. </li></ul><h3>Result</h3><p>Thus, the <strong>Box Plot</strong> was successfully created to visualize and compare the distribution of numerical data across multiple categorical variables.</p><h1>5. Data Visualization with Matplotlib and Seaborn</h1><p>a. Line Plot</p><p><br />import matplotlib.pyplot as plt<br /><br />x = [1, 2, 3, 4]<br />y = [10, 20, 25, 30]<br />plt.plot(x, y)<br />plt.title("Line Plot")<br />plt.xlabel("X-axis")<br />plt.ylabel("Y-axis")<br />plt.grid(True)<br />plt.savefig("line_plot.png")<br />plt.show()<br /></p><p>b. Bar Plots</p><p><br />import pandas as pd<br />df = pd.DataFrame({'Category': ['A', 'B', 'C'], 'Values': [10, 20, 15]})<br />df.plot(kind='bar', x='Category', y='Values')<br />plt.title("Bar Plot")<br />plt.show()<br /></p><p>c. Histogram and Density Plot</p><p><br />import seaborn as sns<br />import numpy as np<br />data = np.random.randn(1000)<br />sns.histplot(data, kde=True)<br />plt.title("Histogram and Density")<br />plt.show()<br /></p><p>d. Scatter Plot</p><p><br />x = np.random.rand(50)<br />y = np.random.rand(50)<br />plt.scatter(x, y)<br />plt.title("Scatter Plot")<br />plt.xlabel("x")<br />plt.ylabel("y")<br />plt.show()<br /></p><p>e. Box Plot</p><p><br />sns.boxplot(data=np.random.randn(100, 4))<br />plt.title("Box Plot")<br />plt.show()<br /></p>

@@ -1,0 +1,151 @@
+<h1><strong>DATA SCIENCE - </strong>22DS102006</h1><h2>Data Wrangling</h2><ul><li><ol><li>Perform hierarchical indexing by creating a series with a list of lists (or arrays) as the index, select subsets of data at outer and inner levels using partial indexing.</li><li>Rearrange the tabular data with hierarchical indexing using unstack and stack method.</li><li>Create two different DataFrames and merge them using index as merge key and combine data with overlap using combine_first method.</li></ol></li></ul><p>A). Perform hierarchical indexing by creating a series with a list of lists (or arrays) as the index, select subsets of data at outer and inner levels using partial indexing.</p><h3>Aim</h3><p>To create a <strong>Pandas Series with hierarchical (multi-level) indexing</strong> using a list of lists and to select subsets of data using <strong>partial indexing at the outer and inner levels</strong>.</p><p>Syntax </p><p>			pd.MultiIndex.from_arrays(arrays, names=None)</p><p>To create a Series:</p><p>			pd.Series(data, index=multi_index)</p><p>To select data:</p><p>series.loc['Outer_Level']</p><p>series.loc[('Outer_Level', 'Inner_Level')]</p><p><strong>Solution Program</strong></p><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+# Create a list of lists for hierarchical index
+index<span class="code"> </span>=<span class="code"> [</span>
+<span class="code">    [</span>'Engineering'<span class="code">, </span>'Engineering'<span class="code">, </span>'Science'<span class="code">, </span>'Science'<span class="code">],</span>
+<span class="code">    [</span>'CSE'<span class="code">, </span>'ECE'<span class="code">, </span>'Physics'<span class="code">, </span>'Chemistry'<span class="code">]</span>
+<span class="code">]</span>
+# Create MultiIndex
+multi_index<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">MultiIndex</span>.<span class="code">from_arrays(</span>
+<span class="code">    </span>index<span class="code">,</span>
+<span class="code">    </span>names=<span class="code">[</span>'Department'<span class="code">, </span>'Branch'<span class="code">]</span>
+<span class="code">)</span>
+# Create a Series using the hierarchical index
+marks<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">Series(</span>
+<span class="code">    [</span>85<span class="code">, </span>78<span class="code">, </span>92<span class="code">, </span>88<span class="code">],</span>
+<span class="code">    </span>index=multi_index
+<span class="code">)</span>
+print<span class="code">(</span>"Original Series:"<span class="code">)</span>
+print<span class="code">(</span>marks<span class="code">)</span>
+# Partial indexing at the outer level
+print<span class="code">(</span>"\nData for Engineering:"<span class="code">)</span>
+print<span class="code">(</span>marks.<span class="code">loc[</span>'Engineering'<span class="code">])</span>
+# Partial indexing at the inner level
+print<span class="code">(</span>"\nData for CSE:"<span class="code">)</span>
+print<span class="code">(</span>marks.<span class="code">loc[(</span>'Engineering'<span class="code">, </span>'CSE'<span class="code">)])</span>
+# Selecting a subset using both levels
+print<span class="code">(</span>"\nData for Science:"<span class="code">)</span>
+print<span class="code">(</span>marks.<span class="code">loc[</span>'Science'<span class="code">])</span></pre><h3>Output</h3><pre><span class="code">Original Series:</span>
+<span class="code">Department   Branch</span>
+<span class="code">Engineering  CSE       85</span>
+<span class="code">             ECE       78</span>
+<span class="code">Science      Physics   92</span>
+<span class="code">             Chemistry 88</span>
+<span class="code">dtype: int64</span>
+<span class="code">Data for Engineering:</span>
+<span class="code">Branch</span>
+<span class="code">CSE    85</span>
+<span class="code">ECE    78</span>
+<span class="code">dtype: int64</span>
+<span class="code">Data for CSE:</span>
+<span class="code">85</span>
+<span class="code">Data for Science:</span>
+<span class="code">Branch</span>
+<span class="code">Physics      92</span>
+<span class="code">Chemistry    88</span>
+<span class="code">dtype: int64</span></pre><h3>Explanation</h3><ul><li><span class="code">MultiIndex.from_arrays()</span> creates a <strong>hierarchical index</strong> with two levels: <ul><li><strong>Outer level:</strong> <span class="code">Department</span> </li><li><strong>Inner level:</strong> <span class="code">Branch</span> </li></ul></li><li><span class="code">marks.loc['Engineering']</span> selects all records under the <strong>outer level</strong> <span class="code">Engineering</span>. </li><li><span class="code">marks.loc[('Engineering', 'CSE')]</span> selects a specific value using <strong>both outer and inner levels</strong>. </li><li><span class="code">marks.loc['Science']</span> selects all records belonging to the <span class="code">Science</span> department. </li></ul><p><strong>Result:</strong> The program successfully demonstrates hierarchical indexing and partial indexing at both outer and inner levels in Pandas.</p><p><strong>B). Rearrange the tabular data with hierarchical indexing using unstack and stack method.</strong></p><h2>Aim</h2><p>To rearrange tabular data with <strong>hierarchical indexing</strong> using the Pandas <span class="code">unstack()</span> and <span class="code">stack()</span> methods.</p><h2>Syntax</h2><h3><span class="code">unstack()</span></h3><p>Converts one level of a hierarchical row index into columns.</p><h2>Syntax</h2><h3><span class="code">unstack()</span></h3><p>Converts one level of a hierarchical row index into columns.</p><pre>DataFrame.<span class="code">unstack(</span>level=-1<span class="code">)</span></pre><p>or</p><pre>Series.<span class="code">unstack(</span>level=-1<span class="code">)</span></pre><h3><span class="code">stack()</span></h3><p>Converts columns into a hierarchical row index.</p><pre>DataFrame.<span class="code">stack()</span></pre><p>or</p><pre>Series.<span class="code">stack()</span></pre><h2>4. Dat Solution Program</h2><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+# Create hierarchical index
+index<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">MultiIndex</span>.<span class="code">from_tuples(</span>
+<span class="code">    [</span>
+<span class="code">        (</span>'Engineering'<span class="code">, </span>'CSE'<span class="code">),</span>
+<span class="code">        (</span>'Engineering'<span class="code">, </span>'ECE'<span class="code">),</span>
+<span class="code">        (</span>'Science'<span class="code">, </span>'Physics'<span class="code">),</span>
+<span class="code">        (</span>'Science'<span class="code">, </span>'Chemistry'<span class="code">)</span>
+<span class="code">    ],</span>
+<span class="code">    </span>names=<span class="code">[</span>'Department'<span class="code">, </span>'Branch'<span class="code">]</span>
+<span class="code">)</span>
+# Create tabular data
+data<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame(</span>
+<span class="code">    {</span>
+<span class="code">        </span>'2025'<span class="code">: [</span>85<span class="code">, </span>78<span class="code">, </span>92<span class="code">, </span>88<span class="code">],</span>
+<span class="code">        </span>'2026'<span class="code">: [</span>90<span class="code">, </span>82<span class="code">, </span>95<span class="code">, </span>91<span class="code">]</span>
+<span class="code">    },</span>
+<span class="code">    </span>index=index
+<span class="code">)</span>
+print<span class="code">(</span>"Original Tabular Data:"<span class="code">)</span>
+print<span class="code">(</span>data<span class="code">)</span>
+# Unstack the inner level
+unstacked_data<span class="code"> </span>=<span class="code"> </span>data.<span class="code">unstack()</span>
+print<span class="code">(</span>"\nData after Unstack():"<span class="code">)</span>
+print<span class="code">(</span>unstacked_data<span class="code">)</span>
+# Stack the data back
+stacked_data<span class="code"> </span>=<span class="code"> </span>unstacked_data.<span class="code">stack()</span>
+print<span class="code">(</span>"\nData after Stack():"<span class="code">)</span>
+print<span class="code">(</span>stacked_data<span class="code">)</span></pre><h2>Output</h2><pre><span class="code">Original Tabular Data:</span>
+<span class="code">                       2025  2026</span>
+<span class="code">Department   Branch</span>
+<span class="code">Engineering  CSE          85    90</span>
+<span class="code">             ECE          78    82</span>
+<span class="code">Science      Physics      92    95</span>
+<span class="code">             Chemistry    88    91</span>
+<span class="code">Data after Unstack():</span>
+<span class="code">             2025                    2026</span>
+<span class="code">Branch        CSE ECE Chemistry Physics CSE ECE Chemistry Physics</span>
+<span class="code">Department</span>
+<span class="code">Engineering     85  78       NaN     NaN  90  82       NaN     NaN</span>
+<span class="code">Science        NaN NaN      88.0    92.0 NaN NaN      91.0    95.0</span>
+<span class="code">Data after Stack():</span>
+<span class="code">Department   Branch</span>
+<span class="code">Engineering  CSE          85    90</span>
+<span class="code">             ECE          78    82</span>
+<span class="code">Science      Chemistry    88    91</span>
+<span class="code">             Physics      92    95</span>
+<span class="code">dtype: int64</span></pre><h3>Explanation</h3><ol><li><strong>Hierarchical Indexing:</strong><br /><span class="code">Department</span> and <span class="code">Branch</span> form the two levels of the hierarchical index. </li></ol><p><span class="code"><strong>unstack()</strong></span><strong> method:</strong></p><pre>data.<span class="code">unstack()</span></pre><p>Moves the inner index (<span class="code">Branch</span>) from the rows to the columns.</p><p><span class="code"><strong>stack()</strong></span><strong> method:</strong></p><pre>unstacked_data.<span class="code">stack()</span></pre><p>Moves the column labels back into the hierarchical row index.</p><h3>Result</h3><p>The <span class="code">unstack()</span> method <strong>converts row-level hierarchical indexes into columns</strong>, while the <span class="code">stack()</span> method <strong>converts columns back into hierarchical row indexes</strong>.</p><h2>Aim</h2><p>To create two different Pandas DataFrames, <strong>merge them using the index as the merge key</strong>, and combine their data using the <span class="code">combine_first()</span> method to fill missing values with available values from another DataFrame.</p><h2>Syntax</h2><h3>Merge using index</h3><pre>pd.<span class="code">merge(</span>df1<span class="code">, </span>df2<span class="code">, </span>left_index=True<span class="code">, </span>right_index=True<span class="code">)</span></pre><h3><span class="code">combine_first()</span></h3><pre>df1.<span class="code">combine_first(</span>df2<span class="code">)</span></pre><p>The <span class="code">combine_first()</span> method fills the missing (<span class="code">NaN</span>) values in the first DataFrame with corresponding values from the second DataFrame.</p><h2>Solution Program</h2><pre>import<span class="code"> </span>pandas<span class="code"> </span>as<span class="code"> </span>pd
+# Create the first DataFrame
+df1<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame(</span>
+<span class="code">    {</span>
+<span class="code">        </span>'Name'<span class="code">: [</span>'Ravi'<span class="code">, </span>'Sita'<span class="code">, </span>'Arun'<span class="code">],</span>
+<span class="code">        </span>'Marks'<span class="code">: [</span>85<span class="code">, </span>None<span class="code">, </span>78<span class="code">],</span>
+<span class="code">        </span>'Grade'<span class="code">: [</span>'A'<span class="code">, </span>'B'<span class="code">, </span>None<span class="code">]</span>
+<span class="code">    },</span>
+<span class="code">    </span>index=<span class="code">[</span>101<span class="code">, </span>102<span class="code">, </span>103<span class="code">]</span>
+<span class="code">)</span>
+# Create the second DataFrame
+df2<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">DataFrame(</span>
+<span class="code">    {</span>
+<span class="code">        </span>'Name'<span class="code">: [</span>'Ravi'<span class="code">, </span>'Sita'<span class="code">, </span>'Kiran'<span class="code">],</span>
+<span class="code">        </span>'Marks'<span class="code">: [</span>90<span class="code">, </span>88<span class="code">, </span>82<span class="code">],</span>
+<span class="code">        </span>'Grade'<span class="code">: [</span>None<span class="code">, </span>'A'<span class="code">, </span>'B'<span class="code">]</span>
+<span class="code">    },</span>
+<span class="code">    </span>index=<span class="code">[</span>101<span class="code">, </span>102<span class="code">, </span>104<span class="code">]</span>
+<span class="code">)</span>
+print<span class="code">(</span>"First DataFrame:"<span class="code">)</span>
+print<span class="code">(</span>df1<span class="code">)</span>
+print<span class="code">(</span>"\nSecond DataFrame:"<span class="code">)</span>
+print<span class="code">(</span>df2<span class="code">)</span>
+# Merge DataFrames using index as merge key
+merged<span class="code"> </span>=<span class="code"> </span>pd.<span class="code">merge(</span>
+<span class="code">    </span>df1<span class="code">,</span>
+<span class="code">    </span>df2<span class="code">,</span>
+<span class="code">    </span>left_index=True<span class="code">,</span>
+<span class="code">    </span>right_index=True<span class="code">,</span>
+<span class="code">    </span>how='outer'<span class="code">,</span>
+<span class="code">    </span>suffixes=<span class="code">(</span>'_DF1'<span class="code">, </span>'_DF2'<span class="code">)</span>
+<span class="code">)</span>
+print<span class="code">(</span>"\nMerged DataFrame:"<span class="code">)</span>
+print<span class="code">(</span>merged<span class="code">)</span>
+# Combine data using combine_first()
+combined<span class="code"> </span>=<span class="code"> </span>df1.<span class="code">combine_first(</span>df2<span class="code">)</span>
+print<span class="code">(</span>"\nDataFrame after combine_first():"<span class="code">)</span>
+print<span class="code">(</span>combined<span class="code">)</span></pre><h2>Output</h2><pre><span class="code">First DataFrame:</span>
+<span class="code">      Name  Marks Grade</span>
+<span class="code">101   Ravi   85.0     A</span>
+<span class="code">102   Sita    NaN     B</span>
+<span class="code">103   Arun   78.0  None</span>
+<span class="code">Second DataFrame:</span>
+<span class="code">      Name  Marks Grade</span>
+<span class="code">101   Ravi   90.0  None</span>
+<span class="code">102   Sita   88.0     A</span>
+<span class="code">104  Kiran   82.0     B</span>
+<span class="code">Merged DataFrame:</span>
+<span class="code">      Name_DF1  Marks_DF1 Grade_DF1 Name_DF2  Marks_DF2 Grade_DF2</span>
+<span class="code">101       Ravi       85.0         A     Ravi       90.0      None</span>
+<span class="code">102       Sita        NaN         B     Sita       88.0         A</span>
+<span class="code">103       Arun       78.0      None      NaN        NaN       NaN</span>
+<span class="code">104        NaN        NaN       NaN    Kiran       82.0         B</span>
+<span class="code">DataFrame after combine_first():</span>
+<span class="code">      Name  Marks Grade</span>
+<span class="code">101   Ravi   85.0     A</span>
+<span class="code">102   Sita   88.0     B</span>
+<span class="code">103   Arun   78.0  None</span>
+<span class="code">104  Kiran   82.0     B</span></pre><h2>Explanation</h2><h3>1. Creating DataFrames</h3><p>Two DataFrames, <span class="code">df1</span> and <span class="code">df2</span>, are created with student information. Their <strong>index values</strong> act as student IDs.</p><h3>2. Merging using index</h3><pre>pd.<span class="code">merge(</span>df1<span class="code">, </span>df2<span class="code">, </span>left_index=True<span class="code">, </span>right_index=True<span class="code">, </span>how='outer'<span class="code">)</span></pre><p>Here, the <strong>index is used as the merge key</strong>. The <span class="code">outer</span> merge keeps all index values from both DataFrames.</p><h3>3. Combining overlapping data</h3><pre>df1.<span class="code">combine_first(</span>df2<span class="code">)</span></pre><p><span class="code">combine_first()</span> uses values from <span class="code">df1</span> wherever they exist. If <span class="code">df1</span> contains a missing value, it takes the corresponding value from <span class="code">df2</span>.</p><p>For example:</p><pre><span class="code">df1 Marks for 102 = NaN</span>
+<span class="code">df2 Marks for 102 = 88</span></pre><p>After <span class="code">combine_first()</span>:</p><pre><span class="code">Marks for 102 = 88</span></pre><h3>Result</h3><p>The program demonstrates both <strong>index-based merging</strong> and <strong>combining overlapping DataFrame data using </strong><span class="code"><strong>combine_first()</strong></span>.</p><h1>4. Data Wrangling</h1><p>a. Hierarchical Indexing</p><p><br />import pandas as pd<br />import numpy as np<br /><br />data = pd.Series(np.random.randn(6),<br />                 index=[['a', 'a', 'b', 'b', 'c', 'c'],<br />                        [1, 2, 1, 2, 1, 2]])<br />print(data)<br />print(data['b'])<br />print(data[:, 1])<br /></p><p>b. Stack and Unstack</p><p><br />df = data.unstack()<br />print(df)<br />print(df.stack())<br /></p><p>c. Merge and Combine</p><p><br />df1 = pd.DataFrame({'a': [1, np.nan, 3], 'b': [4, 5, 6]})<br />df2 = pd.DataFrame({'a': [7, 8, 9], 'b': [np.nan, 11, 12]})<br /><br />merged = df1.combine_first(df2)<br />print(merged)<br /></p>
